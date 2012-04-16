@@ -1,0 +1,20 @@
+
+
+CREATE TABLE payment (
+       idpayment INT PRIMARY KEY AUTOINCREMENT,
+       idgroup INT,
+       payment_date DATE,
+       amount REAL,
+       deleted BOOLEAN
+)
+
+CREATE TABLE group (
+       idgroup INT PRIMARY KEY AUTOINCREMENT,
+       amount REAL,
+       initial_date DATE,
+       termination_date DATE,
+       frequency REAL,
+       frequency_type TEXT,
+       status TEXT,
+       deleted BOOLEAN
+)
