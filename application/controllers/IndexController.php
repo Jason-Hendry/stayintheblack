@@ -10,7 +10,8 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+      $this->view->loginForm = new Application_Form_Login();
+      $this->view->loginForm->setAction('auth/login');
     }
 
 

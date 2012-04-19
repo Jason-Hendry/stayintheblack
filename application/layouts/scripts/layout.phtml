@@ -6,6 +6,25 @@
     <?php echo $this->headScript(); ?> 
   </head>
 <body>
+
+<?php if(Zend_Auth::getInstance()->hasIdentity()) { 
+        $auth = Zend_Auth::getInstance()->getIdentity();
+?>
+<div class="banner user-banner">
+
+  <div class="user-nav">
+    <a href="accounts">Accounts</a>
+  </div>
+
+   <?php echo $auth->real_name; ?>
+  <a href="auth/logout">Logout</a>
+</div>
+<?php } else { ?>
+<div class="banner anon-banner">
+   <?php echo $this->loginForm; ?>
+</div>
+<?php } /* fi hasIdentity */ ?>
+
 <?php echo $this->layout()->content; ?>
 <body>
 </html>
