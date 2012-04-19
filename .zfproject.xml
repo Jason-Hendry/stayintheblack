@@ -36,11 +36,13 @@
         <dbTableDirectory>
           <dbTableFile dbTableName="Payment"/>
           <dbTableFile dbTableName="PaymentGroup"/>
+          <dbTableFile dbTableName="Account"/>
         </dbTableDirectory>
         <modelFile modelName="PaymentMapper"/>
         <modelFile modelName="PaymentGroupMapper"/>
         <modelFile modelName="Payment"/>
         <modelFile modelName="PaymentGroup"/>
+        <modelFile modelName="Account"/>
       </modelsDirectory>
       <modulesDirectory>
         <moduleDirectory moduleName="Accounts">

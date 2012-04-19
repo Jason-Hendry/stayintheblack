@@ -66,6 +66,8 @@ $options = $bootstrap->getOption('resources');
 $dbFile  = $options['db']['params']['dbname'];
 if (file_exists($dbFile)) {
     unlink($dbFile);
+} else if(!is_dir(dirname($dbFile))) {
+  mkdir(dirname($dbFile),0777,true);
 }
  
 // this block executes the actual statements that were loaded from

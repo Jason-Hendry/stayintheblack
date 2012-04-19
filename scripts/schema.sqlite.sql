@@ -1,6 +1,7 @@
 
 CREATE TABLE payment (
        idpayment INTEGER PRIMARY KEY AUTOINCREMENT,
+       idusr INTEGER,
        idgroup INTEGER,
        idaccount INTEGER,
        payment_date DATE,
@@ -8,10 +9,9 @@ CREATE TABLE payment (
        deleted BOOLEAN
 );
 
-CREATE INDEX "payment_idpayment" ON "payment" ("idpayment");
-
 CREATE TABLE payment_group (
        idgroup INTEGER PRIMARY KEY AUTOINCREMENT,
+       idusr INTEGER,
        amount REAL,
        currency TEXT,
        initial_date DATE,
@@ -27,20 +27,20 @@ CREATE TABLE account_balance (
        idaccount INTEGER,
        amount REAL,
        balance_timestamp INTEGER
-)
+);
 
 CREATE TABLE payment_account (
        idaccount INTEGER PRIMARY KEY AUTOINCREMENT,
+       idusr INTEGER,
        account_name TEXT,
        account_type INTEGER
 );
 
 CREATE TABLE payment_account_type (
        idaccount_type INTEGER PRIMARY KEY AUTOINCREMENT,
-       account_type TEXT
+       account_type TEXT,
+       account_code TEXT
 );
-
-CREATE INDEX "payment_group_idgroup" ON "payment_group" ("idgroup");
 
 CREATE TABLE usr (
     idusr INTEGER  NOT NULL PRIMARY KEY,
@@ -48,3 +48,7 @@ CREATE TABLE usr (
     password VARCHAR(32) NULL,
     real_name VARCHAR(150) NULL
 );
+
+
+CREATE INDEX "payment_idpayment" ON "payment" ("idpayment");
+CREATE INDEX "payment_group_idgroup" ON "payment_group" ("idgroup");
