@@ -1,6 +1,17 @@
 <h1>Your Accounts</h1>
 
- <?php foreach($this->weeks as $week) { ?>
-
-
+<div class="row">
+  <div class="span4">Week</div>
+</div>
+<?php foreach($this->weeks as $week) { ?>
+<div class="row">
+  <div class="span1"><?php echo date('d/m',$week['start']).'-'.date('d/m',$week['end']); ?></div>
+  <div class="span3">
+    <div class="btn-group">
+      <?php foreach($week['days'] as $day) { ?>
+        <button class="btn btn-mini<?php echo $day['class']; ?>"><?php echo $day['name']; ?></button>
+      <?php } ?>
+    </div>
+  </div>
+</div>
  <?php } ?>

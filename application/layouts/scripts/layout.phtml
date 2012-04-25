@@ -2,29 +2,74 @@
 <html>
   <head>
     <?php echo $this->headTitle(); ?> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+   <style type="text/css"> body { padding-top:60px; } </style> 
     <?php echo $this->headLink(); ?> 
     <?php echo $this->headScript(); ?> 
   </head>
 <body>
 
 <?php if(Zend_Auth::getInstance()->hasIdentity()) { 
-        $auth = Zend_Auth::getInstance()->getIdentity();
+  $isAuth = true;
+  $auth = Zend_Auth::getInstance()->getIdentity();
+} else {
+   $isAuth = false;
+}
 ?>
-<div class="banner user-banner">
 
-  <div class="user-nav">
-    <a href="accounts">Accounts</a>
-  </div>
 
-   <?php echo $auth->real_name; ?>
-  <a href="auth/logout">Logout</a>
+<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Stay in the Black</a>
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i> <?php echo $isAuth ? $auth->real_name : 'Login'; ?>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+   <?php if($isAuth) { ?>
+              <li><a href="#">Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="auth/logout">Sign Out</a></li>
+                 <?php } else { ?>
+<li><?php echo $this->loginForm; ?></li>
+               <?php } ?>
+            </ul>
+          </div>
+
+          <div class="nav-collapse">
+            <ul class="nav">
+   <?php if($isAuth) { ?>
+              <li><a href="accounts">Accounts</a></li>
+               <?php } ?>
+            </ul>
+          </div>
+        </div>
+      </div>
 </div>
-<?php } else { ?>
-<div class="banner anon-banner">
-   <?php echo $this->loginForm; ?>
-</div>
-<?php } /* fi hasIdentity */ ?>
 
+<div class="container">
 <?php echo $this->layout()->content; ?>
+</div>
+
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+
 <body>
 </html>
