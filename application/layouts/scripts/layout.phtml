@@ -40,7 +40,7 @@
    <?php if($isAuth) { ?>
               <li><a href="#">Profile</a></li>
               <li class="divider"></li>
-              <li><a href="auth/logout">Sign Out</a></li>
+              <li><a href="<?php echo $this->url(array('controller'=>'auth','action'=>'logout')); ?>">Sign Out</a></li>
                  <?php } else { ?>
 <li><?php echo $this->loginForm; ?></li>
                <?php } ?>
@@ -50,8 +50,8 @@
           <div class="nav-collapse">
             <ul class="nav">
    <?php if($isAuth) { ?>
-              <li><a href="accounts">Accounts</a></li>
-              <li><a href="accounts/setup">Setup</a></li>
+              <li><a href="<?php echo $this->url(array('controller'=>'index','action'=>'index','module'=>'accounts')); ?>">Accounts</a></li>
+              <li><a href="<?php echo $this->url(array('controller'=>'setup','action'=>'index','module'=>'accounts')); ?>">Setup</a></li>
                <?php } ?>
             </ul>
           </div>

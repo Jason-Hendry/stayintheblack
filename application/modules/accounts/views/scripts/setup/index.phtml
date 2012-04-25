@@ -1,4 +1,38 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Setup</b> and script/action name <b>index</b></p>
-</div>
+<header class="page-header">
+  <h1>Setup
+  <small>Create and Manage all your accounts</small>
+  </h1>
+</header>
+
+<section>
+  <div class="page-header">
+    <h1>Bank Accounts</h1>
+  </div>
+  <div class="row">
+    <div class="span2">
+      <a href="<?php echo $this->url(array('action'=>'addBank')); ?>" class="btn btn-primary">Add Bank Account</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="page-header">
+    <h1>Credit Cards</h1>
+  </div>
+  <div class="row">
+    <div class="span2">
+      <button class="btn btn-primary">Add Credit Card</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="page-header">
+    <h1>Loans</h1>
+  </div>
+  <div class="row">
+    <div class="span2">
+      <button class="btn btn-primary">Add Loan</button>
+    </div>
+  </div>
+</section>
