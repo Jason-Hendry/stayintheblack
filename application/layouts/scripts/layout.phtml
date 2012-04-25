@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-   <style type="text/css"> body { padding-top:60px; } </style> 
-    <?php echo $this->headLink(); ?> 
+    <style type="text/css"> body { padding-top:60px; } </style> 
+<?php 
+   echo $this->headLink()
+   ->appendStylesheet('/css/bootstrap.css')
+   ->appendStylesheet('/css/bootstrap-responsive.css')
+   ->appendStylesheet('/css/main.css')
+   ->headLink(); 
+?> 
     <?php echo $this->headScript(); ?> 
+
   </head>
 <body>
 
@@ -46,6 +51,7 @@
             <ul class="nav">
    <?php if($isAuth) { ?>
               <li><a href="accounts">Accounts</a></li>
+              <li><a href="accounts/setup">Setup</a></li>
                <?php } ?>
             </ul>
           </div>
@@ -57,19 +63,24 @@
 <?php echo $this->layout()->content; ?>
 </div>
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap-transition.js"></script>
-<script src="js/bootstrap-alert.js"></script>
-<script src="js/bootstrap-modal.js"></script>
-<script src="js/bootstrap-dropdown.js"></script>
-<script src="js/bootstrap-scrollspy.js"></script>
-<script src="js/bootstrap-tab.js"></script>
-<script src="js/bootstrap-tooltip.js"></script>
-<script src="js/bootstrap-popover.js"></script>
-<script src="js/bootstrap-button.js"></script>
-<script src="js/bootstrap-collapse.js"></script>
-<script src="js/bootstrap-carousel.js"></script>
-<script src="js/bootstrap-typeahead.js"></script>
+<?php 
+$this->headScript()
+                 ->appendFile("/js/jquery-1.7.2.min.js")
+                 ->appendFile("/js/bootstrap-transition.js")
+                 ->appendFile("/js/bootstrap-alert.js")
+                 ->appendFile("/js/bootstrap-modal.js")
+                 ->appendFile("/js/bootstrap-dropdown.js")
+                 ->appendFile("/js/bootstrap-scrollspy.js")
+                 ->appendFile("/js/bootstrap-tab.js")
+                 ->appendFile("/js/bootstrap-tooltip.js")
+                 ->appendFile("/js/bootstrap-popover.js")
+                 ->appendFile("/js/bootstrap-button.js")
+                 ->appendFile("/js/bootstrap-collapse.js")
+                 ->appendFile("/js/bootstrap-carousel.js")
+                 ->appendFile("/js/bootstrap-typeahead.js");
+
+                 echo $this->headScript();
+?>
 
 <body>
 </html>

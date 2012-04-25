@@ -21,6 +21,9 @@
           <actionMethod actionName="add"/>
           <actionMethod actionName="login"/>
         </controllerFile>
+        <controllerFile controllerName="Setup">
+          <actionMethod actionName="index"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Payment"/>
@@ -45,11 +48,14 @@
         <modelFile modelName="Account"/>
       </modelsDirectory>
       <modulesDirectory>
-        <moduleDirectory moduleName="Accounts">
+        <moduleDirectory moduleName="accounts">
           <apisDirectory enabled="false"/>
           <configsDirectory enabled="false"/>
           <controllersDirectory>
             <controllerFile controllerName="Index">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="Setup">
               <actionMethod actionName="index"/>
             </controllerFile>
           </controllersDirectory>
@@ -63,6 +69,9 @@
           <viewsDirectory>
             <viewScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Setup">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
@@ -93,6 +102,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Auth">
             <viewScriptFile forActionName="login"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Setup">
+            <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

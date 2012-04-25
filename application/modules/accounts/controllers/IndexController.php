@@ -43,7 +43,7 @@ class Accounts_IndexController extends Zend_Controller_Action
                        'dayStart'=>date('U',strtotime("+$j days",$start)),
                        'dayEnd'=>date('U',strtotime("+$j days +24 hours",$start)),
                        );
-          $day['class'] = $now >= $day['dayStart'] && $now < $day['dayEnd'] ? ' btn-info' : '';
+          $day['class'] = $now >= $day['dayStart'] && $now < $day['dayEnd'] ? 'today' : '';
           $day['name'] = substr(date('D',$day['dayStart']),0,1);
           $days[] = $day;
         }

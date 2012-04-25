@@ -1,17 +1,33 @@
+<div class="page-header">
 <h1>Your Accounts</h1>
+</div>
 
-<div class="row">
-  <div class="span4">Week</div>
-</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2">Week</th>
+      <th>Days</th>
+    </tr>
+  </thead>
+  <tbody>
 <?php foreach($this->weeks as $week) { ?>
-<div class="row">
-  <div class="span1"><?php echo date('d/m',$week['start']).'-'.date('d/m',$week['end']); ?></div>
-  <div class="span3">
-    <div class="btn-group">
-      <?php foreach($week['days'] as $day) { ?>
-        <button class="btn btn-mini<?php echo $day['class']; ?>"><?php echo $day['name']; ?></button>
-      <?php } ?>
-    </div>
-  </div>
-</div>
+    <tr>
+      <td><?php echo date('M j',$week['start']); ?></td>
+      <td><?php echo date(' M j',$week['end']); ?></td>
+      <td>
+        <div class="btn-group">
+          <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+          <?php foreach($week['days'] as $day) { ?>
+            <span class="<?php echo $day['class']; ?>"><?php echo $day['name']; ?></span>&nbsp;
+          <?php } ?>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Payment</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
  <?php } ?>
+  </tbody>
+</table>
