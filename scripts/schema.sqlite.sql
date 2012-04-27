@@ -33,6 +33,8 @@ CREATE TABLE payment_account (
        idaccount INTEGER PRIMARY KEY AUTOINCREMENT,
        idusr INTEGER,
        account_name TEXT,
+       institution TEXT,
+       created INTEGER,
        account_type INTEGER
 );
 

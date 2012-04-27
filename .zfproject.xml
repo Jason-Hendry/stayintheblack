@@ -29,6 +29,7 @@
         <formFile formName="Payment"/>
         <formFile formName="Auth"/>
         <formFile formName="Login"/>
+        <formFile formName=".?"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -59,12 +60,26 @@
               <actionMethod actionName="index"/>
             </controllerFile>
           </controllersDirectory>
-          <formsDirectory enabled="false"/>
+          <formsDirectory>
+            <formFile formName="Account"/>
+            <formFile formName="Bankaccount"/>
+          </formsDirectory>
           <layoutsDirectory enabled="false">
             <layoutScriptsDirectory enabled="false"/>
           </layoutsDirectory>
           <modelsDirectory>
-            <dbTableDirectory enabled="false"/>
+            <dbTableDirectory>
+              <dbTableFile dbTableName="PaymentAccount"/>
+              <dbTableFile dbTableName="PaymentAccountBank"/>
+            </dbTableDirectory>
+            <modelFile modelName="PaymentAccount"/>
+            <modelFile modelName="BankAccount"/>
+            <modelFile modelName="CreditCardAccount"/>
+            <modelFile modelName="LoanAccount"/>
+            <modelFile modelName="LoanAccountMapper"/>
+            <modelFile modelName="PaymentAccountMapper"/>
+            <modelFile modelName="BankAccountMapper"/>
+            <modelFile modelName="CreditCardAccountMapper"/>
           </modelsDirectory>
           <viewsDirectory>
             <viewScriptsDirectory>
