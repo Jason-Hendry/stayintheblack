@@ -34,14 +34,22 @@ CREATE TABLE payment_account (
        idusr INTEGER,
        account_name TEXT,
        institution TEXT,
-       created INTEGER,
-       account_type INTEGER
+       created INTEGER
 );
 
-CREATE TABLE payment_account_type (
-       idaccount_type INTEGER PRIMARY KEY AUTOINCREMENT,
-       account_type TEXT,
-       account_code TEXT
+CREATE TABLE payment_account_bank (
+       idaccount INTEGER PRIMARY KEY,
+);
+CREATE TABLE payment_account_credit_card (
+       idaccount INTEGER PRIMARY KEY,
+       interest_free_days INTEGER,
+       interest_rate REAL,
+       transfer_period REAL,
+       transfer_rate REAL
+);
+CREATE TABLE payment_account_loan (
+       idaccount INTEGER PRIMARY KEY,
+       rate_type TEXT,
 );
 
 CREATE TABLE usr (

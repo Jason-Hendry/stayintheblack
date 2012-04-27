@@ -18,7 +18,7 @@ class Accounts_SetupController extends Zend_Controller_Action
       if($this->getRequest()->isPost()) {
         if ($this->view->bankForm->isValid($this->getRequest()->getPost())) {
           $mapper  = new Accounts_Model_BankAccountMapper();
-          $mapper->save(new Account_Model_BankAccount($this->view->bankForm->getValues()));
+          $mapper->save(new Accounts_Model_BankAccount($this->view->bankForm->getValues()));
           return $this->_helper->redirector('index');
         }
       }

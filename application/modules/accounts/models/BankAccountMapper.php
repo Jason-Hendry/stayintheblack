@@ -45,11 +45,12 @@ class Accounts_Model_BankAccountMapper
     return $this->_dbBankTable;
   }
 
-  public function save(Account_Model_BankAccount $account) {
+  public function save(Accounts_Model_BankAccount $account) {
      $data = array(
-                   'account_name'   => $account->getAccountName(),
+                   'account_name' => $account->getAccountName(),
                    'institution' => $account->getInstitution(),
                    'created' => date('U'),
+                   'idusr' => Zend_Auth::getInstance()->getIdentity()->idusr,
                    );
  
      if (null === ($id = $account->getId())) {
