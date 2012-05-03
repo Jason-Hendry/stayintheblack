@@ -17,6 +17,15 @@ class Accounts_IndexController extends Zend_Controller_Action
       // TODO: Integrate with user selected options
       $userOptions = $this->getInvokeArg('bootstrap')->getOption('defaultUserOptions');
 
+      $bankAccounts = new Accounts_Model_BankAccountMapper();
+      $this->view->bankAccounts = $bankAccounts->fetchAll();
+
+      $creditCardAccounts = new Accounts_Model_CreditCardAccountMapper();
+      $this->view->creditCardAccounts = $creditCardAccounts->fetchAll();
+
+      $loanAccounts = new Accounts_Model_LoanAccountMapper();
+      $this->view->loanAccounts = $loanAccounts->fetchAll();
+
       $this->view->weeks = $this->generateWeeksArray($userOptions);
     }
 
@@ -33,29 +42,46 @@ class Accounts_IndexController extends Zend_Controller_Action
       $startTime = date('U', strtotime("-{$userOptions['pastWeeks']} weeks", $weekStart));
       $totalWeeks = $userOptions['pastWeeks'] + $userOptions['futureWeeks'] + 1;
 
+      $paymentMapper = new Accounts_Model_PaymentMapper();
+      $payments = $paymentMapper->fetchRange($startTime,strtotime("+$totalWeeks weeks",$startTime));
+
+      //      Zend_Debug::dump($payments); exit;
+
       $weeks = array();
       for($i=0;$i<$totalWeeks;$i++) {
         $start = date('U',strtotime("+$i weeks",$startTime));
         $end = date('U',strtotime("+7 days",$start))-1; // Last second of Week
-        $days = array();
-        for($j=0;$j<7;$j++) {
-          $day = array(
-                       'dayStart'=>date('U',strtotime("+$j days",$start)),
-                       'dayEnd'=>date('U',strtotime("+$j days +24 hours",$start)),
-                       );
-          $day['class'] = $now >= $day['dayStart'] && $now < $day['dayEnd'] ? 'today' : '';
-          $day['name'] = substr(date('D',$day['dayStart']),0,1);
-          $days[] = $day;
+        $weekPayments = array();
+        $totals = array();
+        foreach($payments as $j=>$p) {
+          if($p->getPaymentDate() > $start && $p->getPaymentDate() < $end) {
+            $weekPayments[] = $p;
+            if(!isset($totals[$p->idAccount]))
+              $totals[$p->idAccount] = $p->amount;
+            else
+              $totals[$p->idAccount] += $p->amount;
+            unset($payments[$j]); // Reduce next loop size
+          }
         }
         $weeks[] = array(
                          'start'=>$start,
                          'end'=>$end,
-                         'days'=>$days
+                         'payments'=>$weekPayments,
+                         'totals'=>$totals,
                          );
       }
       return $weeks;
     }
 
-
+    public function addpaymentAction() {
+      $this->view->paymentForm = new Accounts_Form_Payment();
+      if($this->getRequest()->isPost()) {
+        if($this->view->paymentForm->isValid($this->getRequest()->getPost())) {
+          $mapper = new Accounts_Model_PaymentMapper();
+          $mapper->save(new Accounts_Model_Payment($this->view->paymentForm->getValues()));
+          return $this->_helper->redirector('index');
+        }
+      }
+      $this->view->paymentForm->setAction($this->view->url());
+    }
 }
-

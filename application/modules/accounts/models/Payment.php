@@ -1,13 +1,14 @@
 <?php
 
-class Accounts_Model_PaymentAccount
+class Accounts_Model_Payment
 {
   protected $_id;
-  protected $_accountName;
-  protected $_institution;
+  protected $_idAccount;
+  protected $_paymentDate;
+  protected $_description;
+  protected $_amount;
   protected $_created;
-  protected $_deleted = false;
-  protected $_itemName = 'Payment Account';
+  protected $_deleted;
 
   public function __construct(array $options = null) {
     if (is_array($options)) {
@@ -28,14 +29,14 @@ class Accounts_Model_PaymentAccount
   public function __set($name,$value) {
     $method = 'set' . $name;
     if (('mapper' == $name) || !method_exists($this, $method)) {
-      throw new Exception("Invalid {$this->_itemName} property");
+      throw new Exception("Invalid Payment property");
     }
     $this->$method($value);
   }
   public function __get($name) {
     $method = 'get' . $name;
     if (('mapper' == $name) || !method_exists($this, $method)) {
-      throw new Exception("Invalid {$this->_itemName} property");
+      throw new Exception("Invalid Payment property");
     }
     return $this->$method();
   }
@@ -43,21 +44,27 @@ class Accounts_Model_PaymentAccount
   public function delete() { $this->_deleted = true; }
   public function isDeleted() { return $this->_deleted; }
 
-  public function setAccountName($value) { $this->_accountName = $value; return $this; }
-  public function setInstitution($value) { $this->_institution = $value; return $this; }
+  public function setPaymentDate($value) { $this->_paymentDate = is_numeric($value) ? $value : strtotime($value); return $this; }
+  public function setDescription($value) { $this->_description = $value; return $this; }
+  public function setAmount($value) { $this->_amount = $value; return $this; }
+  public function setIdAccount($value) { $this->_idAccount = $value; return $this; }
   public function setId($value) { $this->_id = $value; return $this; }
   public function setCreated($value) { $this->_created = $value; return $this; }
 
-  public function getAccountName() { return $this->_accountName; }
-  public function getInstitution() { return $this->_institution; }
+  public function getPaymentDate() { return (int)$this->_paymentDate; }
+  public function getDescription() { return $this->_description; }
+  public function getAmount() { return $this->_amount; }
+  public function getIdAccount() { return $this->_idAccount; }
   public function getId() { return ((int)$this->_id)>0 ? (int)$this->_id : null; }
   public function getCreated() { return $this->_created; }
 
   public function toArray() {
     return array(
                  'id'=>$this->getId(),
-                 'accountName'=>$this->getAccountName(),
-                 'institution'=>$this->getInstitution(),
+                 'paymentDate'=>$this->getPaymentDate(),
+                 'description'=>$this->getDescription(),
+                 'amount'=>$this->getAmount(),
+                 'idAccount'=>$this->getIdAccount(),
                  );
   }
 

@@ -6,6 +6,8 @@ CREATE TABLE payment (
        idaccount INTEGER,
        payment_date DATE,
        amount REAL,
+       description TEXT,
+       created INTEGER,
        deleted BOOLEAN
 );
 
@@ -34,11 +36,15 @@ CREATE TABLE payment_account (
        idusr INTEGER,
        account_name TEXT,
        institution TEXT,
-       created INTEGER
+       created INTEGER, 
+       deleted BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE payment_account_bank (
        idaccount INTEGER PRIMARY KEY,
+       interest_rate REAL,
+       account_fee REAL,
+       account_fee_type TEXT
 );
 CREATE TABLE payment_account_credit_card (
        idaccount INTEGER PRIMARY KEY,
@@ -49,7 +55,7 @@ CREATE TABLE payment_account_credit_card (
 );
 CREATE TABLE payment_account_loan (
        idaccount INTEGER PRIMARY KEY,
-       rate_type TEXT,
+       rate_type TEXT
 );
 
 CREATE TABLE usr (

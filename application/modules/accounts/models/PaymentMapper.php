@@ -1,9 +1,9 @@
 <?php
 
-class Accounts_Model_PaymentAccountMapper
+class Accounts_Model_PaymentMapper
 {
   protected $_dbTable;
-  protected $_model = 'Accounts_Model_PaymentAccount';
+  protected $_model = 'Accounts_Model_Payment';
 
   public function setDbTable($dbTable)
   {
@@ -20,22 +20,23 @@ class Accounts_Model_PaymentAccountMapper
   public function getDbTable()
   {
     if (null === $this->_dbTable) {
-      $this->setDbTable('Accounts_Model_DbTable_PaymentAccount');
+      $this->setDbTable('Accounts_Model_DbTable_Payment');
     }
     return $this->_dbTable;
   }
  
-  public function save(Accounts_Model_PaymentAccount $account)
+  public function save(Accounts_Model_Payment $payment)
   {
     $data = array(
-                  'account_name'   => $account->getAccountName(),
-                  'institution' => $account->getInstitution(),
+                  'payment_date'=>$payment->getPaymentDate(),
+                  'description'=>$payment->getDescription(),
+                  'amount'=>$payment->getAmount(),
+                  'idaccount'=>$payment->getIdAccount(),
                   'created' => date('U'),
                   'idusr' => Zend_Auth::getInstance()->getIdentity()->idusr,
-                  'deleted'=> $account->isDeleted() ? 'TRUE' : 'FALSE',
+                  'deleted'=> $payment->isDeleted() ? 'TRUE' : 'FALSE',
                   );
-    if (null === ($id = $account->getId())) {
-      unset($data['idaccount']);
+    if (null === ($id = $payment->getId())) {
       return $this->getDbTable()->insert($data);
     } else {
       $this->getDbTable()->update($data, array('idaccount = ?' => $id));
@@ -43,7 +44,7 @@ class Accounts_Model_PaymentAccountMapper
     }
   }
 
-  public function find($id, Accounts_Model_PaymentAccount $account)
+  public function find($id, Accounts_Model_Payment $payment)
   {
     $result = $this->getDbTable()->find($id);
     if (0 == count($result)) {
@@ -54,12 +55,14 @@ class Accounts_Model_PaymentAccountMapper
       throw new Zend_Exception('Unauthorized Access');
       return false;
     }
-    $account->setId($row->idaccount)
-      ->setAccountName($row->account_name)
-      ->setInstitution($row->institution)
+    $payment->setId($row->idpayment)
+      ->setPaymentDate($row->payment_name)
+      ->setDescription($row->institution)
+      ->setAmount($row->created)
+      ->setIdAccount($row->created)
       ->setCreated($row->created);
     if($row->deleted)
-      $account->delete();
+      $payment->delete();
   }
   public function selectAll() {
     $select = new Zend_Db_Table_Select($this->getDbTable());
@@ -70,23 +73,36 @@ class Accounts_Model_PaymentAccountMapper
   }
   public function createModelFromRow($row) {
     $entry = new $this->_model();
-    $entry->setId($row->idaccount)
-      ->setAccountName($row->account_name)
-      ->setInstitution($row->institution)
+    $entry->setId($row->idpayment)
+      ->setPaymentDate($row->payment_date)
+      ->setDescription($row->description)
+      ->setAmount($row->amount)
+      ->setIdAccount($row->idaccount)
       ->setCreated($row->created);
     return $entry;
   }
-  public function fetchAll()
-  {
-    $select = $this->selectAll();
-    $resultSet = $this->getDbTable()->fetchAll($select);
+  public function rowSetToModels($rowSet) {
     $entries   = array();
-    foreach ($resultSet as $row) {
+    foreach ($rowSet as $row) {
       $entries[] = $this->createModelFromRow($row);
     }
     return $entries;
-  
-}
+  }
+
+  public function fetchAll()
+  {
+    $select = $this->selectAll();
+    return $this->rowSetToModels($this->getDbTable()->fetchAll($select));
+  }
+
+  public function fetchRange($start,$end) {
+    $select = $this->selectAll();
+    $select->where('payment_date>?',$start);
+    $select->where('payment_date<?',$end);
+    return $this->rowSetToModels($this->getDbTable()->fetchAll($select));
+  }
 
 }
+
+
 

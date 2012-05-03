@@ -1,6 +1,6 @@
 <?php
 
-class Accounts_Form_Bankaccount extends Accounts_Form_Account
+class Accounts_Form_CreditCardaccount extends Accounts_Form_Account
 {
   
   public function init()

@@ -1,30 +1,9 @@
 <?php
 
-class Accounts_Model_BankAccountMapper
+class Accounts_Model_BankAccountMapper extends Accounts_Model_PaymentAccountMapper
 {
-  protected $_dbTable;
   protected $_dbBankTable;
-
-  public function setDbTable($dbTable)
-  {
-    if (is_string($dbTable)) {
-      $dbTable = new $dbTable();
-    }
-    if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-      throw new Exception('Invalid table data gateway provided');
-    }
-    $this->_dbTable = $dbTable;
-    return $this;
-  }
- 
-  public function getDbTable()
-  {
-    if (null === $this->_dbTable) {
-      $this->setDbTable('Accounts_Model_DbTable_PaymentAccount');
-    }
-    return $this->_dbTable;
-  }
-
+  protected $_model = 'Accounts_Model_BankAccount';
   public function setDbBankTable($dbTable)
   {
     if (is_string($dbTable)) {
@@ -39,54 +18,42 @@ class Accounts_Model_BankAccountMapper
  
   public function getDbBankTable()
   {
-    if (null === $this->_dbTable) {
+    if (null === $this->_dbBankTable) {
       $this->setDbBankTable('Accounts_Model_DbTable_PaymentAccountBank');
     }
     return $this->_dbBankTable;
   }
 
   public function save(Accounts_Model_BankAccount $account) {
-     $data = array(
-                   'account_name' => $account->getAccountName(),
-                   'institution' => $account->getInstitution(),
-                   'created' => date('U'),
-                   'idusr' => Zend_Auth::getInstance()->getIdentity()->idusr,
-                   );
- 
-     if (null === ($id = $account->getId())) {
-       unset($data['id']);
-       $this->getDbTable()->insert($data);
-     } else {
-       $this->getDbTable()->update($data, array('id = ?' => $id));
-     }
+    $idaccount = parent::save($account);
+    $data = array(
+                  'idaccount'=>$idaccount,
+                  'interest_rate'=>$account->getInterestRate()
+                  );
+    if (null === ($id = $account->getId())) {
+      $this->getDbBankTable()->insert($data);
+    } else {
+      $this->getDbBankTable()->update($data, array('idaccount = ?' => $id));
+    }    
   }
 
-  public function find($id, Accounts_Model_BankAccount $account)
-  {
-    $result = $this->getDbTable()->find($id);
-    if (0 == count($result)) {
+  public function find($id, Accounts_Model_BankAccount $account) {
+    parent::find($id, $account);
+    $result = $this->getDbBankTable()->find($id);
+    if(0 == count($result))
       return;
-    }
     $row = $result->current();
-    $account->setId($row->idaccount)
-      ->setAccountName($row->account_name)
-      ->setInstitution($row->institution)
-      ->setCreated($row->created);
+    $account->setInterestRate($row->interest_rate);
   }
- 
-  public function fetchAll()
-  {
-    $resultSet = $this->getDbTable()->fetchAll();
-    $entries   = array();
-    foreach ($resultSet as $row) {
-      $entry = new Accounts_Model_BankAccount();
-      $entry->setId($row->idaccount)
-        ->setAccountName($row->account_name)
-        ->setInstitution($row->institution)
-        ->setCreated($row->created);
 
-      $entries[] = $entry;
-    }
+  public function selectAll() {
+    $select = parent::selectAll();
+    $select->setIntegrityCheck(false);
+    $select->joinNatural('payment_account_bank');
+    return $select;
+  }
+  public function fetchAll() {
+    $entries = parent::fetchAll();
     return $entries;
   }
 

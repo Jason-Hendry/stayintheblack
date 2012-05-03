@@ -9,8 +9,33 @@
     <h1>Bank Accounts</h1>
   </div>
   <div class="row">
+    <div class="span12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Account Name</th>
+            <th>Institution</th>
+            <th>&nbsp;</td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($this->BankAccounts as $account) { ?>
+          <tr>
+            <td> <?php echo $account->accountName; ?></td>
+            <td> <?php echo $account->institution; ?></td>
+            <td>
+              <a class="btn btn-mini btn-info" href="<?php echo $this->url(array('action'=>'editAccount','type'=>'Bank','id'=>$account->id)); ?>">Edit</a>
+              <a class="btn btn-mini btn-danger" href="<?php echo $this->url(array('action'=>'deleteAccount','type'=>'Bank','id'=>$account->id)); ?>">Delete</a>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
     <div class="span2">
-      <a href="<?php echo $this->url(array('action'=>'addBankAccount')); ?>" class="btn btn-primary">Add Bank Account</a>
+      <a href="<?php echo $this->url(array('action'=>'addAccount','type'=>'Bank')); ?>" class="btn btn-primary">Add Bank Account</a>
     </div>
   </div>
 </section>
@@ -20,8 +45,33 @@
     <h1>Credit Cards</h1>
   </div>
   <div class="row">
+    <div class="span12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Account Name</th>
+            <th>Institution</th>
+            <th>&nbsp;</td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($this->CreditCardAccounts as $account) { ?>
+          <tr>
+            <td> <?php echo $account->accountName; ?></td>
+            <td> <?php echo $account->institution; ?></td>
+            <td>
+              <a class="btn btn-mini btn-info" href="<?php echo $this->url(array('action'=>'editAccount','type'=>'CreditCard','id'=>$account->id)); ?>">Edit</a>
+              <a class="btn btn-mini btn-danger" href="<?php echo $this->url(array('action'=>'deleteAccount','type'=>'CreditCard','id'=>$account->id)); ?>">Delete</a>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
     <div class="span2">
-      <button class="btn btn-primary">Add Credit Card</button>
+      <a href="<?php echo $this->url(array('action'=>'addAccount','type'=>'CreditCard')); ?>" class="btn btn-primary">Add Credit Card</a>
     </div>
   </div>
 </section>
@@ -31,8 +81,33 @@
     <h1>Loans</h1>
   </div>
   <div class="row">
+    <div class="span12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Account Name</th>
+            <th>Institution</th>
+            <th>&nbsp;</td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($this->LoanAccounts as $account) { ?>
+          <tr>
+            <td> <?php echo $account->accountName; ?></td>
+            <td> <?php echo $account->institution; ?></td>
+            <td>
+              <a class="btn btn-mini btn-info" href="<?php echo $this->url(array('action'=>'editAccount','type'=>'Loan','id'=>$account->id)); ?>">Edit</a>
+              <a class="btn btn-mini btn-danger" href="<?php echo $this->url(array('action'=>'deleteAccount','type'=>'Loan','id'=>$account->id)); ?>">Delete</a>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
     <div class="span2">
-      <button class="btn btn-primary">Add Loan</button>
+      <a href="<?php echo $this->url(array('action'=>'addAccount','type'=>'Loan')); ?>" class="btn btn-primary">Add Loan</a>
     </div>
   </div>
 </section>

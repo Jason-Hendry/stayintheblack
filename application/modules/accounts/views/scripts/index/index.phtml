@@ -2,11 +2,30 @@
 <h1>Your Accounts</h1>
 </div>
 
+<div class="row">
+  <div class="span12">
+    <a href="<?php echo $this->url(array('action'=>'AddPayment')); ?>" class="btn">Add Payment</a>
+    <a href="<?php echo $this->url(array('action'=>'ImportPayments')); ?>" class="btn">Import Payments</a>
+    <a href="<?php echo $this->url(array('action'=>'AddRecurringPayment')); ?>" class="btn">Add Recurring Payment</a>
+  </div>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
       <th colspan="2">Week</th>
-      <th>Days</th>
+      <th>Income</th>
+      <th>Recurring</th>
+      <?php foreach($this->creditCardAccounts as $a) {?>
+      <th colspan="2"><?php echo $a->getAccountName() ?></th>
+      <?php }?>
+      <?php foreach($this->loanAccounts as $a) {?>
+      <th colspan="2"><?php echo $a->getAccountName() ?></th>
+      <?php }?>
+      <?php foreach($this->bankAccounts as $a) {?>
+      <th colspan="2"><?php echo $a->getAccountName() ?></th>
+      <?php }?>
+      <th>Balance</th>
     </tr>
   </thead>
   <tbody>
@@ -14,19 +33,21 @@
     <tr>
       <td><?php echo date('M j',$week['start']); ?></td>
       <td><?php echo date(' M j',$week['end']); ?></td>
-      <td>
-        <div class="btn-group">
-          <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-          <?php foreach($week['days'] as $day) { ?>
-            <span class="<?php echo $day['class']; ?>"><?php echo $day['name']; ?></span>&nbsp;
-          <?php } ?>
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Payment</a></li>
-          </ul>
-        </div>
-      </td>
+      <td><?php echo '$0.00'; ?></td>
+      <td><?php echo '$0.00'; ?></td>
+      <?php foreach($this->creditCardAccounts as $a) {?>
+        <td><?php echo sprintf('$%0.3f',isset($week['totals'][$a->id]) ? $week['totals'][$a->id] : 0); ?></td>
+        <td><?php echo '$0.00'; ?></td>
+      <?php } ?>
+      <?php foreach($this->loanAccounts as $a) {?>
+        <td><?php echo sprintf('$%0.3f',isset($week['totals'][$a->id]) ? $week['totals'][$a->id] : 0); ?></td>
+        <td><?php echo '$0.00'; ?></td>
+      <?php } ?>
+      <?php foreach($this->bankAccounts as $a) {?>
+        <td><?php echo sprintf('$%0.3f',isset($week['totals'][$a->id]) ? $week['totals'][$a->id] : 0); ?></td>
+        <td><?php echo '$0.00'; ?></td>
+      <?php } ?>
+      <td><?php echo '$0.00'; ?></td>
     </tr>
  <?php } ?>
   </tbody>
