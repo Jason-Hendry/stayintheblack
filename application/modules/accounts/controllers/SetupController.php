@@ -35,22 +35,23 @@ class Accounts_SetupController extends Zend_Controller_Action
       $type = $this->getRequest()->getParam('type');
       $mapperType = "Accounts_Model_{$type}AccountMapper";
       $modelType = "Accounts_Model_{$type}Account";
-      $formType = "Accounts_Form_{$type}Account";
+      $formType = "Accounts_Form_{$type}account";
       $mapper  = new $mapperType();
-      $account = new $model();
+      $account = new $modelType();
 
       $this->view->type = $type;
       
-      $this->view->accountForm = $formType(array('actionType'=>'Save'));
+      $this->view->accountForm = new $formType(array('actionType'=>'Save'));
       $mapper  = new $mapperType();
       if($this->getRequest()->isPost()) {
         if ($this->view->accountForm->isValid($this->getRequest()->getPost())) {
-          $mapper->save(new $model($this->view->accountForm->getValues()));
+          $account->setOptions($this->view->accountForm->getValues());
+          $mapper->save($account);
+          $balance = new Accounts_Model_PaymentAccountBalanceMapper();
+          $balance->save(new Accounts_Model_PaymentAccountBalance($this->view->accountForm->getValues()));
           return $this->_helper->redirector('index');
         }
       } else {
-        //        
-        $account = new $mode();
         $mapper->find($this->getRequest()->getParam('id'),$account);
         $this->view->accountForm->populate($account->toArray());
       }
@@ -60,7 +61,7 @@ class Accounts_SetupController extends Zend_Controller_Action
       $type = $this->getRequest()->getParam('type');
       $mapperType = "Accounts_Model_{$type}AccountMapper";
       $modelType = "Accounts_Model_{$type}Account";
-      $formType = "Accounts_Form_{$type}Account";
+      $formType = "Accounts_Form_{$type}account";
       $mapper  = new $mapperType();
       $account = new $modelType();
       
@@ -71,7 +72,11 @@ class Accounts_SetupController extends Zend_Controller_Action
       if($this->getRequest()->isPost()) {
         if ($this->view->accountForm->isValid($this->getRequest()->getPost())) {
           $mapper  = new $mapperType();
-          $mapper->save(new $modelType($this->view->accountForm->getValues()));
+          $id = $mapper->save(new $modelType($this->view->accountForm->getValues()));
+          $balance = new Accounts_Model_PaymentAccountBalanceMapper();
+          $b = new Accounts_Model_PaymentAccountBalance($this->view->accountForm->getValues());
+          $b->setIdAccount($id);
+          $balance->save($b);
           return $this->_helper->redirector('index');
         }
       }

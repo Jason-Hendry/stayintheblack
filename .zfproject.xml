@@ -73,6 +73,7 @@
               <dbTableFile dbTableName="PaymentAccount"/>
               <dbTableFile dbTableName="PaymentAccountBank"/>
               <dbTableFile dbTableName="Payment"/>
+              <dbTableFile dbTableName="PaymentAccountBalance"/>
             </dbTableDirectory>
             <modelFile modelName="PaymentAccount"/>
             <modelFile modelName="BankAccount"/>

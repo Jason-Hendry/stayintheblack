@@ -4,7 +4,7 @@ CREATE TABLE payment (
        idusr INTEGER,
        idgroup INTEGER,
        idaccount INTEGER,
-       payment_date DATE,
+       payment_date INTEGER,
        amount REAL,
        description TEXT,
        created INTEGER,
@@ -24,13 +24,6 @@ CREATE TABLE payment_group (
        deleted BOOLEAN
 );
 
-CREATE TABLE account_balance (
-       idaccount_balance INTEGER PRIMARY KEY AUTOINCREMENT,
-       idaccount INTEGER,
-       amount REAL,
-       balance_timestamp INTEGER
-);
-
 CREATE TABLE payment_account (
        idaccount INTEGER PRIMARY KEY AUTOINCREMENT,
        idusr INTEGER,
@@ -38,6 +31,13 @@ CREATE TABLE payment_account (
        institution TEXT,
        created INTEGER, 
        deleted BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE payment_account_balance (
+       idaccount_balance INTEGER PRIMARY KEY AUTOINCREMENT,
+       idaccount INTEGER,
+       balance REAL,
+       balance_timestamp INTEGER
 );
 
 CREATE TABLE payment_account_bank (

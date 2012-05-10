@@ -44,7 +44,7 @@ class Accounts_IndexController extends Zend_Controller_Action
 
       $paymentMapper = new Accounts_Model_PaymentMapper();
       $payments = $paymentMapper->fetchRange($startTime,strtotime("+$totalWeeks weeks",$startTime));
-
+      //      $payments = $paymentMapper->fetchAll();
       //      Zend_Debug::dump($payments); exit;
 
       $weeks = array();
@@ -54,7 +54,7 @@ class Accounts_IndexController extends Zend_Controller_Action
         $weekPayments = array();
         $totals = array();
         foreach($payments as $j=>$p) {
-          if($p->getPaymentDate() > $start && $p->getPaymentDate() < $end) {
+          if($p->getPaymentDate()->getTimestamp() > $start && $p->getPaymentDate()->getTimestamp() < $end) {
             $weekPayments[] = $p;
             if(!isset($totals[$p->idAccount]))
               $totals[$p->idAccount] = $p->amount;
