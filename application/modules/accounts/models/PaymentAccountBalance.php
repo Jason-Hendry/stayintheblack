@@ -1,6 +1,6 @@
 <?php
 
-class Accounts_Model_PaymentAccountBalance extends Application_Model_Abstract {
+class Accounts_Model_PaymentAccountBalance extends Rain_Model_Abstract {
   
   protected $_modelItemName = 'Account Balance';
   protected $_id;

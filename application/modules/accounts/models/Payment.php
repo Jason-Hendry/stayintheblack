@@ -1,6 +1,6 @@
 <?php
 
-class Accounts_Model_Payment extends Application_Model_Abstract
+class Accounts_Model_Payment extends Rain_Model_Abstract
 {
   protected $_id;
   protected $_idAccount;
@@ -10,9 +10,6 @@ class Accounts_Model_Payment extends Application_Model_Abstract
   protected $_created;
   protected $_deleted;
   protected $_modelItemName = 'Payment';
-
-  public function delete() { $this->_deleted = true; }
-  public function isDeleted() { return $this->_deleted; }
 
   public function setPaymentDate($value) { 
     if(is_subclass_of($value,'Zend_Date')) {
@@ -33,16 +30,6 @@ class Accounts_Model_Payment extends Application_Model_Abstract
   public function getIdAccount() { return $this->_idAccount; }
   public function getId() { return ((int)$this->_id)>0 ? (int)$this->_id : null; }
   public function getCreated() { return $this->_created; }
-
-  public function toArray() {
-    return array(
-                 'id'=>$this->getId(),
-                 'paymentDate'=>$this->getPaymentDate(),
-                 'description'=>$this->getDescription(),
-                 'amount'=>$this->getAmount(),
-                 'idAccount'=>$this->getIdAccount(),
-                 );
-  }
 
 }
 

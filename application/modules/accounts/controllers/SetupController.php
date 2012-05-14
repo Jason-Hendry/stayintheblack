@@ -47,8 +47,14 @@ class Accounts_SetupController extends Zend_Controller_Action
         if ($this->view->accountForm->isValid($this->getRequest()->getPost())) {
           $account->setOptions($this->view->accountForm->getValues());
           $mapper->save($account);
-          $balance = new Accounts_Model_PaymentAccountBalanceMapper();
-          $balance->save(new Accounts_Model_PaymentAccountBalance($this->view->accountForm->getValues()));
+          if($this->view->accountForm->getValue('balance')) {
+            $balance = new Accounts_Model_PaymentAccountBalanceMapper();
+            if(!$this->view->accountForm->getValue('balanceDate')) {
+              $now = new Zend_Date();
+              $this->view->accountForm->getElement('balanceDate')->setValue($now->now());
+            }
+            $balance->save(new Accounts_Model_PaymentAccountBalance($this->view->accountForm->getValues()));
+        }
           return $this->_helper->redirector('index');
         }
       } else {

@@ -13,7 +13,6 @@
    ->appendStylesheet('/css/main.css')
    ->headLink(); 
 ?> 
-    <?php echo $this->headScript(); ?> 
 
   </head>
 <body>
@@ -66,7 +65,7 @@
 
 <?php 
 $this->headScript()
-                 ->appendFile("/js/jquery-1.7.2.min.js")
+                 ->prependFile("/js/jquery-1.7.2.min.js")
                  ->appendFile("/js/bootstrap-transition.js")
                  ->appendFile("/js/bootstrap-alert.js")
                  ->appendFile("/js/bootstrap-modal.js")

@@ -1,0 +1,26 @@
+
+label input.rain-recurring { display:inline; margin-right: 9px; }
+.rain-recurring-freq { display:none; }
+.rain-recurring-business { display:none; }
+.rain-recurring-business input[type="checkbox"] { display:inline; margin-right: 9px; }
+
+.rain-recurring-public-holidays { display:none; }
+.rain-recurring-public-holidays input[type="checkbox"] { display:inline; margin-right: 9px; }
+
+.rain-recurring-x { width: 40px;  display:none; margin-left: 9px; }
+.rain-recurring-until { display:none; }
+.rain-recurring-duration { display:none; margin-left: 9px; }
+.rain-recurring-dow { display: none; }
+.rain-recurring-dom { display: none; }
+
+input[type="checkbox"].rain-recurring-dow-day { margin-left: 9px; margin-right: 9px; }
+
+.rain-recurring-on .rain-recurring-freq { display:inline; }
+.rain-recurring-on .rain-recurring-business { display:block; }
+.rain-recurring-on .rain-recurring-public-holidays { display:block; }
+
+.rain-recurring-every .rain-recurring-x { display: inline; }
+.rain-recurring-every .rain-recurring-duration { display: inline; }
+
+.rain-recurring-weekly .rain-recurring-dow { display: inline; }
+.rain-recurring-monthly .rain-recurring-dom { display: block; }

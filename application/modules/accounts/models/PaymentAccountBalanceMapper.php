@@ -1,6 +1,6 @@
 <?php 
 
-class Accounts_Model_PaymentAccountBalanceMapper extends Application_Model_AbstractMapper {
+class Accounts_Model_PaymentAccountBalanceMapper extends Rain_Model_AbstractMapper {
   protected $_model = 'Accounts_Model_PaymentAccountBalance';
   protected $_dbTableClass = 'Accounts_Model_DbTable_PaymentAccountBalance';
   protected $_dbTablePrimaryKey = 'idaccount_balance';
@@ -13,7 +13,7 @@ class Accounts_Model_PaymentAccountBalanceMapper extends Application_Model_Abstr
                  'balance_timestamp'=>$model->getBalanceTimestamp()->getTimestamp(),
                  );
   } 
-  public function setModelValues($row, Application_Model_Abstract $model) {
+  public function setModelValues($row, Rain_Model_Abstract $model) {
     $model->setId($row->idaccount_balance);
     $model->setIdAccount($row->idaccount);
     $model->setBalance($row->balance);

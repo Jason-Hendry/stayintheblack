@@ -1,6 +1,6 @@
 <?php
 
-class Accounts_Form_Payment extends Twitter_Form
+class Accounts_Form_Payment extends Rain_Form
 {
 
     public function init()
@@ -18,6 +18,21 @@ class Accounts_Form_Payment extends Twitter_Form
       }
 
       $this->addElement('select','idAccount',array('MultiOptions'=>$options,'label'=>'Account'));
+
+
+      $this->addElement('hidden','recurring',array('label'=>'Recurring'));
+      $this->getElement('recurring')->setDecorators(
+        array(
+          "ViewHelper",
+          "Recurring",
+          array("Errors", array("placement" => "append")),
+          array("Description", array("tag" => "span", "class" => "help-block")),
+          array(array("innerwrapper" => "HtmlTag"), array("tag" => "div", "class" => "controls")),
+          array("Label", array("class" => "control-label")),
+          array(array("outerwrapper" => "HtmlTag"), array("tag" => "div", "class" => "control-group"))
+        )
+      );
+
       $this->addElement('submit','submit',array('Label'=>'Add Payment'));
     }
 

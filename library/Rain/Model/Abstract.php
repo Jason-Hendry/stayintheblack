@@ -1,9 +1,9 @@
 <?php
 
-class Application_Model_Abstract 
+class Rain_Model_Abstract 
 {
 
-  protected $_modelItemName;
+  protected $modelItemName;
 
   public function __construct(array $options = null) {
     if (is_array($options)) {
@@ -36,5 +36,15 @@ class Application_Model_Abstract
     return $this->$method();
   }
 
+  public function toArray() {
+    $result = array();
+    $methods = get_class_methods($this);
+    foreach($methods as $method) {
+      if(substr($method,0,3)=='get') {
+        $result[strtolower(substr($method,3,1)).substr($method,4)] = $this->$method();
+      }
+    }
+    return $result;
+  }
 
 }

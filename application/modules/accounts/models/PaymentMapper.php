@@ -1,12 +1,10 @@
 <?php
 
-class Accounts_Model_PaymentMapper extends Application_Model_AbstractMapper
+class Accounts_Model_PaymentMapper extends Rain_Model_AbstractMapper
 {
   protected $_model = 'Accounts_Model_Payment';
   protected $_dbTableClass = 'Accounts_Model_DbTable_Payment';
-  public function __construct() {
-    $this->_dbTablePrimaryKey = 'idpayment';
-  }
+  protected $_dbTablePrimaryKey = 'idpayment';
 
   protected function modelToRow($model) {
     return array(
@@ -20,7 +18,7 @@ class Accounts_Model_PaymentMapper extends Application_Model_AbstractMapper
                  );
     
   }
-  public function setModelValues($row,Application_Model_Abstract $model) {
+  public function setModelValues($row,Rain_Model_Abstract $model) {
     $model->setId($row->idpayment)
       ->setPaymentDate($row->payment_date)
       ->setDescription($row->description)
@@ -29,8 +27,7 @@ class Accounts_Model_PaymentMapper extends Application_Model_AbstractMapper
       ->setCreated($row->created);
   }
   public function selectAll() {
-    $select = new Zend_Db_Table_Select($this->getDbTable());
-    $select->from($this->getDbTable());
+    $select = parent::selectAll();
     $select->where('idusr=?',Zend_Auth::getInstance()->getIdentity()->idusr);
     $select->where('deleted=?','FALSE');
     return $select;

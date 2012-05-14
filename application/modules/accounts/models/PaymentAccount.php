@@ -1,65 +1,25 @@
 <?php
 
-class Accounts_Model_PaymentAccount
+class Accounts_Model_PaymentAccount extends Rain_Model_Abstract
 {
   protected $_id;
   protected $_accountName;
   protected $_institution;
   protected $_created;
   protected $_deleted = false;
-  protected $_itemName = 'Payment Account';
+  protected $modelItemName = 'Payment Account';
 
-  public function __construct(array $options = null) {
-    if (is_array($options)) {
-      $this->setOptions($options);
-    }
-  }
-  public function setOptions(array $options)
-  {
-    $methods = get_class_methods($this);
-    foreach ($options as $key => $value) {
-      $method = 'set' . ucfirst($key);
-      if (in_array($method, $methods)) {
-        $this->$method($value);
-      }
-    }
-    return $this;
-  }
-  public function __set($name,$value) {
-    $method = 'set' . $name;
-    if (('mapper' == $name) || !method_exists($this, $method)) {
-      throw new Exception("Invalid {$this->_itemName} property");
-    }
-    $this->$method($value);
-  }
-  public function __get($name) {
-    $method = 'get' . $name;
-    if (('mapper' == $name) || !method_exists($this, $method)) {
-      throw new Exception("Invalid {$this->_itemName} property");
-    }
-    return $this->$method();
-  }
-
-  public function delete() { $this->_deleted = true; }
-  public function isDeleted() { return $this->_deleted; }
-
+  public function setId($value) { $this->_id = $value; return $this; }
   public function setAccountName($value) { $this->_accountName = $value; return $this; }
   public function setInstitution($value) { $this->_institution = $value; return $this; }
-  public function setId($value) { $this->_id = $value; return $this; }
   public function setCreated($value) { $this->_created = $value; return $this; }
+  public function setDeleted($value) { $this->_deleted = $value; return $this; }
 
+  public function getId() { return ((int)$this->_id)>0 ? (int)$this->_id : null; }
   public function getAccountName() { return $this->_accountName; }
   public function getInstitution() { return $this->_institution; }
-  public function getId() { return ((int)$this->_id)>0 ? (int)$this->_id : null; }
   public function getCreated() { return $this->_created; }
-
-  public function toArray() {
-    return array(
-                 'id'=>$this->getId(),
-                 'accountName'=>$this->getAccountName(),
-                 'institution'=>$this->getInstitution(),
-                 );
-  }
+  public function getDeleted() { return $this->_deleted; }
 
 }
 
