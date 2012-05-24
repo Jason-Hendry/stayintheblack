@@ -15,8 +15,7 @@ class Accounts_Model_PaymentAccountMapper extends Rain_Model_AbstractMapper
                   'idusr' => Zend_Auth::getInstance()->getIdentity()->idusr,
                   'deleted'=> $model->getDeleted() ? 'TRUE' : 'FALSE',
                   );
-    return $data;
-  }
+    return $data;  }
   public function selectAll() {
     $select = parent::selectAll();
     $select->where('idusr=?',Zend_Auth::getInstance()->getIdentity()->idusr);

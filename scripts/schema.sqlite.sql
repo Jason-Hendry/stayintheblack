@@ -2,25 +2,13 @@
 CREATE TABLE payment (
        idpayment INTEGER PRIMARY KEY AUTOINCREMENT,
        idusr INTEGER,
-       idgroup INTEGER,
+       idpayment_group INTEGER,
        idaccount INTEGER,
+       recurring TEXT,
        payment_date INTEGER,
        amount REAL,
        description TEXT,
        created INTEGER,
-       deleted BOOLEAN
-);
-
-CREATE TABLE payment_group (
-       idgroup INTEGER PRIMARY KEY AUTOINCREMENT,
-       idusr INTEGER,
-       amount REAL,
-       currency TEXT,
-       initial_date DATE,
-       termination_date DATE,
-       frequency REAL,
-       frequency_type TEXT,
-       status TEXT,
        deleted BOOLEAN
 );
 
@@ -67,4 +55,3 @@ CREATE TABLE usr (
 
 
 CREATE INDEX "payment_idpayment" ON "payment" ("idpayment");
-CREATE INDEX "payment_group_idgroup" ON "payment_group" ("idgroup");

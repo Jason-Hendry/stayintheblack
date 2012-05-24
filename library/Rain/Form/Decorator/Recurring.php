@@ -34,6 +34,7 @@ class Rain_Form_Decorator_Recurring extends Zend_Form_Decorator_Abstract
       '</select>';
 
     $dow = '<div class="rain-recurring-dow">'.
+      'From selected date or :'.
       '<input type="checkbox" class="checkbox rain-recurring-dow-day" value="monday">Mo'.
       '<input type="checkbox" class="checkbox rain-recurring-dow-day" value="tuesday">Tu'.
       '<input type="checkbox" class="checkbox rain-recurring-dow-day" value="wednesday">We'.
@@ -44,21 +45,29 @@ class Rain_Form_Decorator_Recurring extends Zend_Form_Decorator_Abstract
       '</div>';
 
     $dom = '<div class="btn-group rain-recurring-dom">';
-    for($i=0;$i<31;$i++) {
-      $dom .= '<a class="btn btn-mini" data-toggle="button">'.($i+1).'</a>';
+    for($i=1;$i<=31;$i++) {
+      $dom .= '<label><input type="checkbox" class="checkbox" value="'.$i.'"/>'.$i .'</label>';
     }
     $dom .= '</div>';
 
     $publicHolidays = '<label class="rain-recurring-public-holidays"><input type="checkbox">Excluding Public Holidays</label>';
     $businessOnly = '<label class="rain-recurring-business"><input type="checkbox">Only on Business Days</label>';
 
+    $else = '<select class="rain-recurring-else">'.
+      '<option value="skip">Skip</option>'.
+      '<option value="day-before">Day Before</option>'.
+      '<option value="day-after">Day After</option>'.
+      '</select>';
+
     $until = '<div class="rain-recurring-until">Until <select>'.
       '<option value="forever">Forever</option>'.
       '<option value="date">Date: </option>'.
       '<option value="count">Times...</option>'.
-      '</select></div>';
+      '</select>'.
+      '<input class="rain-recurring-until-x">'.
+      '</div>';
 
-    $output = $checkbox.$select.$x.$duration.$dow.$dom.$publicHolidays.$businessOnly.$until;
+    $output = $checkbox.$select.$x.$duration.$dow.$dom.$publicHolidays.$businessOnly.$else.$until;
 
     $separator = $this->getSeparator();
     switch ($this->getPlacement()) {

@@ -77,11 +77,21 @@ class Accounts_IndexController extends Zend_Controller_Action
       $this->view->paymentForm = new Accounts_Form_Payment();
       if($this->getRequest()->isPost()) {
         if($this->view->paymentForm->isValid($this->getRequest()->getPost())) {
-          $mapper = new Accounts_Model_PaymentMapper();
-          $mapper->save(new Accounts_Model_Payment($this->view->paymentForm->getValues()));
+          $this->saveRecurringPayments(new Accounts_Model_Payment($this->view->paymentForm->getValues()));
           return $this->_helper->redirector('index');
         }
       }
       $this->view->paymentForm->setAction($this->view->url());
     }
+
+    public function saveRecurringPayments($payment) {
+      $mapper = new Accounts_Model_PaymentMapper();
+      Zend_Debug::dump($payment->getRecurring()); exit;
+      if($rec = $payment->getRecurring()) {
+
+      } else {
+        $mapper->save($payment);
+      }
+    }
+
 }

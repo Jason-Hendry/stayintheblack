@@ -12,12 +12,16 @@ label input.rain-recurring { display:inline; margin-right: 9px; }
 .rain-recurring-duration { display:none; margin-left: 9px; }
 .rain-recurring-dow { display: none; }
 .rain-recurring-dom { display: none; }
+.rain-recurring-else { display: none; }
 
+.rain-recurring-dom label { display:inline; }
+.rain-recurring-dom label input[type="checkbox"] { margin-left: 9px; margin-right: 9px; display: inline; }
 input[type="checkbox"].rain-recurring-dow-day { margin-left: 9px; margin-right: 9px; }
 
 .rain-recurring-on .rain-recurring-freq { display:inline; }
 .rain-recurring-on .rain-recurring-business { display:block; }
 .rain-recurring-on .rain-recurring-public-holidays { display:block; }
+.rain-recurring-on .rain-recurring-until { display:block; }
 
 .rain-recurring-every .rain-recurring-x { display: inline; }
 .rain-recurring-every .rain-recurring-duration { display: inline; }

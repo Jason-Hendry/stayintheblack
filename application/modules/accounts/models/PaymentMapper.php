@@ -2,7 +2,7 @@
 
 class Accounts_Model_PaymentMapper extends Rain_Model_AbstractMapper
 {
-  protected $_model = 'Accounts_Model_Payment';
+  protected $_modelClass = 'Accounts_Model_Payment';
   protected $_dbTableClass = 'Accounts_Model_DbTable_Payment';
   protected $_dbTablePrimaryKey = 'idpayment';
 
@@ -11,10 +11,11 @@ class Accounts_Model_PaymentMapper extends Rain_Model_AbstractMapper
                  'payment_date'=>$model->getPaymentDate()->getTimestamp(),
                  'description'=>$model->getDescription(),
                  'amount'=>$model->getAmount(),
+                 'recurring' => json_encode($model->getRecurring()),
                  'idaccount'=>$model->getIdAccount(),
                  'created' => date('U'),
                  'idusr' => Zend_Auth::getInstance()->getIdentity()->idusr,
-                 'deleted'=> $model->isDeleted() ? 'TRUE' : 'FALSE',
+                 'deleted'=> $model->getDeleted() ? 'TRUE' : 'FALSE',
                  );
     
   }
@@ -24,7 +25,8 @@ class Accounts_Model_PaymentMapper extends Rain_Model_AbstractMapper
       ->setDescription($row->description)
       ->setAmount($row->amount)
       ->setIdAccount($row->idaccount)
-      ->setCreated($row->created);
+      ->setCreated($row->created)
+      ->setRecurring($row->recurring);
   }
   public function selectAll() {
     $select = parent::selectAll();
@@ -39,8 +41,4 @@ class Accounts_Model_PaymentMapper extends Rain_Model_AbstractMapper
     $select->where('payment_date<?',$end);
     return $this->rowSetToModels($this->getDbTable()->fetchAll($select));
   }
-
 }
-
-
-
