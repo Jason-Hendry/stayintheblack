@@ -17,6 +17,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     $dbalLoader->register();
     $ormLoader = new \Doctrine\Common\ClassLoader("Doctrine\ORM",$lib);
     $ormLoader->register();
+    $applicationLoader = new \Doctrine\Common\ClassLoader("Application",realpath(APPLICATION_PATH.'/../'));
+    $applicationLoader->register();
 
     // Fetch Application Config Options
     $conf = $this->getApplication()->getOptions();
@@ -33,11 +35,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     //TODO disable on production
     $config->setAutoGenerateProxyClasses(true);
 
-    
+    $dbal = \Doctrine\DBAL\DriverManager::getConnection($conf['doctrine']['connection']);
     $em = \Doctrine\ORM\EntityManager::create($conf['doctrine']['connection'],$config);
-        
-    //Zend_Debug::dump($em->Find('Application\Payment',1));
-
+    
+    Zend_Debug::dump($em->Find('\Application\Entities\Payment',1)->getAccount()->getAccountName());
 
     return $em;
   }

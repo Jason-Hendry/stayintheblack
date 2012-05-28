@@ -2,7 +2,6 @@
 CREATE TABLE payment (
        idpayment INTEGER PRIMARY KEY AUTOINCREMENT,
        idusr INTEGER,
-       idpayment_group INTEGER,
        idaccount INTEGER,
        recurring TEXT,
        payment_date INTEGER,
@@ -49,8 +48,7 @@ CREATE TABLE payment_account_loan (
 CREATE TABLE usr (
     idusr INTEGER  NOT NULL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(32) NULL,
-    real_name VARCHAR(150) NULL
+    password VARCHAR(32) NULL
 );
 
 
