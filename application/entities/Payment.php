@@ -11,13 +11,6 @@ class Payment
   protected $recurring;
 
   /**
-   * @ManyToOne(targetEntity="Application\Entities\User")
-   * @JoinColumn(name="idusr", referencedColumnName="idusr")
-   **/
-  private $user;
-  public function getUser() { return $this->user; }
-
-  /**
    * @ManyToOne(targetEntity="Application\Entities\Account")
    * @JoinColumn(name="idaccount", referencedColumnName="idaccount")
    **/

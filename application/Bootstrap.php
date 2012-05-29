@@ -35,11 +35,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     //TODO disable on production
     $config->setAutoGenerateProxyClasses(true);
 
-    $dbal = \Doctrine\DBAL\DriverManager::getConnection($conf['doctrine']['connection']);
     $em = \Doctrine\ORM\EntityManager::create($conf['doctrine']['connection'],$config);
-    
-    Zend_Debug::dump($em->Find('\Application\Entities\Payment',1)->getAccount()->getAccountName());
-
+   
     return $em;
   }
   public function _initDocType() {

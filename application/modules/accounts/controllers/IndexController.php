@@ -9,6 +9,9 @@ class Accounts_IndexController extends Zend_Controller_Action
           $this->_helper->FlashMessenger('Use must be logged into see your accounts');
           $this->_redirect('auth/login');
       }
+      if($this->getRequest()->getHeader('Content-Type')=='text/javascript') {
+        $this->_helper->viewRender('json');
+      }
         /* Initialize action controller here */
     }
 
@@ -76,9 +79,19 @@ class Accounts_IndexController extends Zend_Controller_Action
     public function addpaymentAction() {
       $this->view->paymentForm = new Accounts_Form_Payment();
       if($this->getRequest()->isPost()) {
-        if($this->view->paymentForm->isValid($this->getRequest()->getPost())) {
-          $this->saveRecurringPayments(new Accounts_Model_Payment($this->view->paymentForm->getValues()));
-          return $this->_helper->redirector('index');
+        // Handle JS API / Ajax Requests
+        if($this->getRequest()->getHeader('Content-Type')=='text/javascript') {
+          try {
+            $data = json_decode($this->getRequest()->getRawBody());
+          } catch(Exception $e) {
+            // TODO: Return Error Message
+          }
+        // else reqular form submits 
+        } else {
+          $data = $this->view->paymentForm->getValues();
+        }
+        if($this->view->paymentForm->isValid($data)) {
+          
         }
       }
       $this->view->paymentForm->setAction($this->view->url());

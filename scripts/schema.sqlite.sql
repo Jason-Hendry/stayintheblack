@@ -1,7 +1,6 @@
 
 CREATE TABLE payment (
        idpayment INTEGER PRIMARY KEY AUTOINCREMENT,
-       idusr INTEGER,
        idaccount INTEGER,
        recurring TEXT,
        payment_date INTEGER,
