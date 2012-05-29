@@ -16,7 +16,8 @@ CREATE TABLE payment_account (
        idusr INTEGER,
        account_name TEXT,
        institution TEXT,
-       created INTEGER, 
+       type STRING,
+       created INTEGER,
        deleted BOOLEAN DEFAULT FALSE
 );
 
